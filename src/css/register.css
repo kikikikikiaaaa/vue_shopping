@@ -1,0 +1,162 @@
+header {
+    height: 80px;
+    border-bottom: 2px solid #c81623;
+}
+
+header img {
+    margin: 5px 0 0 10px;
+}
+
+.reg {
+    height: 500px;
+    margin-top: 20px;
+    border: 1px solid #666;
+}
+
+.reg_top {
+    height: 50px;
+    background-color: blanchedalmond;
+    border-bottom: 1px solid #666;
+}
+
+.reg_top .fl {
+    font-size: 18px;
+    margin: 0 10px;
+    line-height: 50px;
+}
+
+.reg_top .fr {
+    font-size: 14px;
+    margin: 0 10px;
+    line-height: 50px;
+}
+
+.reg_top .fr a {
+    color: #c81623;
+}
+
+.reg_cont {
+    position: relative;
+    width: 640px;
+    height: 320px;
+    margin: 70px auto;
+    line-height: 40px;
+}
+
+.reg_cont li {
+    font-size: 12px;
+    margin: 27px;
+}
+
+.reg_cont li label {
+    display: inline-block;
+    height: 30px;
+    width: 100px;
+    text-align: right;
+}
+
+.reg_cont li input {
+    width: 242px;
+    height: 37px;
+    border: 1px solid #666;
+    margin-left: 2px;
+}
+
+.reg_cont li .error {
+    color: #c81623;
+    margin-left: 5px;
+}
+
+.reg_cont li .succ {
+    color: green;
+    margin-left: 5px;
+}
+
+.reg_cont .safe {
+    position: absolute;
+    display: block;
+    top: 149px;
+    right: 206px;
+    height: 20px;
+    width: 200px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.reg_cont .safe span {
+    float: left;
+}
+
+.reg_cont li .qiangdu span {
+    height: 16px;
+    width: 30px;
+    margin: 0 5px;
+    color: #fff;
+    line-height: 16px;
+    margin-top: 3px;
+}
+
+.reg_cont li .weak {
+    background-color: red;
+}
+
+.reg_cont li .mid {
+    background-color: green;
+}
+
+.reg_cont li .stro {
+    background-color: orange;
+}
+
+.reg_cont ul .shengming {
+    position: absolute;
+    top: 205px;
+    left: 100px;
+}
+
+.reg_cont ul .shengming input {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    vertical-align: middle;
+}
+
+.reg_cont ul li .shengming {
+    font-size: 10px;
+}
+
+.reg_cont ul .shengming a {
+    color: blue;
+}
+
+.reg_cont ul .btn {
+    position: absolute;
+    bottom: -5px;
+    left: 140px;
+    width: 170px;
+    color: #fff;
+    background-color: #c81623;
+}
+
+
+/* .reg_cont li .error_icon {
+    content: '';
+    font-family: ;
+} */
+
+.reg_cont li .icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 26px;
+    height: 30px;
+}
+
+.reg_cont li .error_icon {
+    background: url(../assets/images/error.png) no-repeat;
+    background-position: 2px 3px;
+}
+
+.reg_cont li .succ_icon {
+    background: url(../assets/images/success.png) no-repeat;
+    background-position: 2px 3px;
+}

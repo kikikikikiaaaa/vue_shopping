@@ -1,0 +1,361 @@
+    @font-face {
+        /* 注意路径和font-family */
+        font-family: 'icomoon';
+        src: url('~@/fonts/icomoon.eot?tomleg');
+        src: url('~@/fonts/icomoon.eot?tomleg#iefix') format('embedded-opentype'), url('~@/fonts/icomoon.ttf?tomleg') format('truetype'), url('~@/fonts/icomoon.woff?tomleg') format('woff'), url('~@/fonts/icomoon.svg?tomleg#icomoon') format('svg');
+        font-weight: normal;
+        font-style: normal;
+        font-display: block;
+    }
+    
+    .w {
+        width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .fl {
+        float: left;
+    }
+    
+    .fr {
+        float: right;
+    }
+    
+    .shortcut {
+        height: 30px;
+        line-height: 30px;
+        background-color: antiquewhite;
+    }
+    
+    .shortcut ul li {
+        float: left;
+    }
+    
+    .color_red {
+        color: #c81623;
+    }
+    
+    .shortcut .fr :nth-child(2n) {
+        width: 1px;
+        height: 10px;
+        margin: 11px 12px 0;
+        background-color: #666;
+    }
+    
+    .shortcut .fr .arrow_icon::after {
+        /* content和font-family重要 */
+        content: '\e91e';
+        font-family: 'icomoon';
+        margin-left: 5px;
+    }
+    
+    .header {
+        position: relative;
+        height: 100px;
+        padding: 20px 0px;
+    }
+    
+    header .logo {
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        width: 130px;
+        height: 90px;
+    }
+    
+    header .logo a {
+        display: block;
+        width: 130px;
+        height: 90px;
+        background: url(~@/assets/images/1.png) no-repeat;
+        text-indent: -9999px;
+        overflow: hidden;
+    }
+    
+    .search {
+        position: absolute;
+        top: 25px;
+        left: 27%;
+        width: 538px;
+        height: 36px;
+        border: 2px solid #c81623;
+        border-radius: 8px;
+    }
+    
+    .search input {
+        float: left;
+        margin: 7px 8px;
+        width: 82%;
+    }
+    
+    .search button {
+        float: right;
+        width: 80px;
+        height: 32px;
+        margin-bottom: 0px;
+        background-color: #c81623;
+        font: 16px;
+        color: #fff;
+        border-radius: 5px;
+    }
+    
+    .hotwords {
+        position: absolute;
+        top: 70px;
+        left: 27%;
+        width: 538px;
+        height: 36px;
+        padding-left: 20px;
+    }
+    
+    .hotwords a {
+        margin: 0 6px;
+    }
+    
+    .hotwords a:first-child {
+        color: #c81623;
+    }
+    
+    .shopcar {
+        position: absolute;
+        top: 25px;
+        right: 50px;
+        width: 140px;
+        height: 36px;
+        padding-top: 9px;
+        background-color: antiquewhite;
+    }
+    
+    .shopcar::before {
+        content: '\e93a';
+        font-family: 'icomoon';
+        margin: 0 20px 0px 15px;
+        vertical-align: bottom;
+        border: 0px;
+    }
+    
+    .shopcar::after {
+        content: '\e920';
+        font-family: 'icomoon';
+        margin-left: 10px;
+    }
+    
+    .shopcar i {
+        position: absolute;
+        top: -6px;
+        right: 18px;
+        width: 15px;
+        height: 15px;
+        background-color: #b1191a;
+        text-align: center;
+        line-height: 15px;
+        color: #fff;
+        border-radius: 9px 9px 9px 0px;
+    }
+    
+    nav {
+        height: 47px;
+        border-bottom: 2px solid #b1191a;
+    }
+    
+    nav .dropdown {
+        float: left;
+        width: 210px;
+        height: 47px;
+        background-color: #b1191a;
+        position: relative;
+        z-index: 9999 !important;
+    }
+    
+    .dropdown .dt {
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        text-align: center;
+        line-height: 47px;
+        font-size: 16px;
+    }
+    
+    .dropdown .dd {
+        height: 515px;
+        background-color: #c81623;
+    }
+    
+    .enter-enter {
+        opacity: 0;
+    }
+    
+    .enter-enter-active {
+        transition: all .2s linear;
+    }
+    
+    .dropdown .dropdownlist .list {
+        display: block;
+        height: 30px;
+        width: 100%;
+        overflow: hidden;
+        line-height: 30px;
+        color: #fff;
+        margin-left: 2px;
+        font-size: 12px;
+        padding-left: 7px;
+    }
+    
+    .dropdown .dropdownlist .list::after {
+        content: '\e920';
+        font-family: 'icomoon';
+        float: right;
+        margin-right: 10px;
+        color: #fff;
+    }
+    
+    .dropdown .dropdownlist .list:hover {
+        background-color: #fff;
+        color: #c81623;
+    }
+    
+    .dropdown .item-list {
+        position: absolute;
+        width: 670px;
+        min-height: 515px;
+        background: #fff;
+        left: 210px;
+        border: 1px solid #c81623;
+        top: 47px;
+        z-index: 9999 !important;
+    }
+    
+    .dropdown .item-list .subitem {
+        float: left;
+        width: 670px;
+        padding: 0 4px 0 8px;
+        padding: 6px 0;
+        overflow: hidden;
+        zoom: 1;
+        border-top: 0;
+        margin-left: 8px;
+    }
+    
+    .dropdown .item-list .subitem a {
+        color: #666;
+    }
+    
+    .dropdown .item-list .subitem a:hover {
+        color: #c81623;
+    }
+    
+    .dropdown .item-list .subitem dl {
+        padding: 6px 0;
+        overflow: hidden;
+        zoom: 1;
+    }
+    
+    .dropdown .item-list .subitem dl dt {
+        float: left;
+        width: 54px;
+        line-height: 28px;
+        text-align: right;
+        padding: 3px 6px 0 0;
+        font-weight: 700;
+    }
+    
+    .dropdown .item-list .subitem dl dd {
+        float: left;
+        width: 90%;
+        padding: 3px 0 0;
+        overflow: hidden;
+    }
+    
+    .dropdown .item-list .subitem dl dd em {
+        float: left;
+        height: 14px;
+        line-height: 14px;
+        padding: 0 8px;
+        margin-top: 8px;
+        border-left: 1px solid #ccc;
+    }
+    
+    nav .navitems {
+        float: left;
+        line-height: 47px;
+        font-size: 16px;
+        margin: 0 5px;
+    }
+    
+    .navitems ul li {
+        float: left;
+        margin: 0 25px;
+    }
+    /* 尾部 */
+    
+    .footer {
+        height: 440px;
+        background-color: #f5f5f5;
+    }
+    
+    .mode_servive {
+        height: 130px;
+        margin-top: 20px;
+        border-bottom: 1px solid #666;
+    }
+    
+    .mode_servive li {
+        float: left;
+        width: 200px;
+        margin: 50px;
+    }
+    
+    .mode_servive li div {
+        margin-top: 6px;
+    }
+    
+    .mode_servive li img {
+        float: left;
+        display: block;
+        height: 50px;
+        width: 40px;
+        margin-right: 5px;
+    }
+    
+    .mode_help {
+        height: 190px;
+        border-bottom: 1px solid #666;
+        margin-bottom: 20px;
+    }
+    
+    .mode_help li {
+        float: left;
+        width: 100px;
+        margin: 0 50px;
+    }
+    
+    .mode_help li h3 {
+        margin-top: 5px;
+        margin-bottom: 8px;
+        font-size: 16px;
+        font-weight: normal;
+    }
+    
+    .mode_help li a {
+        display: block;
+    }
+    
+    .mode_help li:last-child {
+        text-align: center;
+    }
+    
+    .mode_help li img {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .mode_mess {
+        float: left;
+        height: 70px;
+        text-align: center;
+        margin-left: 230px;
+    }
+    
+    .mode_mess .links {
+        margin-bottom: 10px;
+    }
