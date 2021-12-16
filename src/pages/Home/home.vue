@@ -1,33 +1,39 @@
 <!--  -->
 <template>
   <div>
-      <TypeNav/>
-      <Focus/>
-      <Recom/>
-      <Floor/>
-      <Floor/>
+    <TypeNav />
+    <Main />
+    <Recom />
+    <Floor v-for="(floor, index) in floorList" :key="floor.id" :list='floor' />
   </div>
 </template>
 
 <script>
-import Typenav from '@/components/TypeNav/typenav.vue';
-import Focus from './Focus/focus.vue'
-import Recom from './Recommon/recom.vue'
-import Floor from './Floor/floor.vue'
+import { mapState } from "vuex";
+import Typenav from "@/components/TypeNav/typenav.vue";
+import Main from "./Main/main.vue";
+import Recom from "./Recommon/recom.vue";
+import Floor from "./Floor/floor.vue";
 export default {
-  name:'',
-  data () {
-    return {
-    };
+  name: "",
+  data() {
+    return {};
+  },
+  mounted() {
+    this.$store.dispatch("getFloorList");
+  },
+  components: { Typenav, Main, Recom, Floor },
+
+  computed: {
+    ...mapState({
+      floorList: (state) => {
+        return state.home.floorList;
+      },
+    }),
   },
 
-  components: {Typenav,Focus,Recom,Floor},
-
-  computed: {},
-
-  methods: {}
-}
-
+  methods: {},
+};
 </script>
 <style  scoped>
 </style>

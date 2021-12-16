@@ -10,7 +10,7 @@
             <router-link to="/register" class="color_red">免费注册</router-link>
           </li>
         </ul>
-        <ul class="fr">
+        <ul class="fr headfr">
           <li>我的订单</li>
           <li></li>
           <li class="arrow_icon iconfont">我的品优购</li>

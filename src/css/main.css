@@ -14,6 +14,16 @@
     overflow: hidden;
 }
 
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.focus img {
+    width: 100%;
+    height: 100%;
+}
+
 .news {
     float: right;
     width: 252px;
@@ -109,6 +119,11 @@
     overflow: hidden;
 }
 
+.recom ul li img {
+    width: 100%;
+    height: 100%;
+}
+
 .floor .shortcut {
     margin-top: 30px;
     border-bottom: 2px solid #c81623;
@@ -129,6 +144,21 @@
     margin-right: 10px;
 }
 
+.floor .shortcut ul li em {
+    width: 1px;
+    height: 10px;
+    margin: 0 12px;
+    background-color: #666;
+}
+
+.floor .shortcut ul li:last-child em {
+    margin: 0;
+    width: 0;
+}
+
+
+/* 内容栏 */
+
 .floor .content {
     height: 300px;
 }
@@ -147,7 +177,7 @@
     float: left;
     width: 83px;
     height: 35px;
-    line-height: 30px;
+    line-height: 35px;
     text-align: center;
     border-bottom: 1px solid #666;
     margin: 0 5px 0 12px;

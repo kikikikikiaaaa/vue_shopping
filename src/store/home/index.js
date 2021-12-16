@@ -1,21 +1,37 @@
-import { reqCategoryList } from '@/api/index'
+import { reqCategoryList, reqGetBannerList, reqGetFloorList } from '@/api/index'
 const state = {
-    categorylist: []
+    categoryList: [],
+    bannerList: [],
+    floorList: []
 }
 const mutations = {
-    CATEGORYLIST(state, categorylist) {
-        state.categorylist = categorylist
-            // console.log(categorylist);
-            // console.log(state.categorylist);
-    }
+    CATEGORYLIST(state, categoryList) {
+        state.categoryList = categoryList
+    },
+    BANNERLIST(state, bannerList) {
+        state.bannerList = bannerList
+    },
+    FLOORLIST(state, floorList) {
+        state.floorList = floorList
+    },
 }
 const actions = {
-    async categoryList({ commit }) {
+    async getCategoryList({ commit }) {
         let result = await reqCategoryList();
-        // console.log(result);
-        // console.log(result.data);
         if (result.code == 200) {
             commit('CATEGORYLIST', result.data)
+        }
+    },
+    async getBannerList({ commit }) {
+        let result = await reqGetBannerList();
+        if (result.code == 200) {
+            commit('BANNERLIST', result.data)
+        }
+    },
+    async getFloorList({ commit }) {
+        let result = await reqGetFloorList();
+        if (result.code == 200) {
+            commit('FLOORLIST', result.data)
         }
     }
 }

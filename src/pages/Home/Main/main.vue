@@ -2,18 +2,13 @@
 <template>
   <div>
     <div class="w">
-      <div class="recom">
-        <i
-          ><img
-            src="~@/assets/images/team_cherry_logo_main_menu-resources.assets-240.png"
-            alt=""
-          />
-        </i>
-        <ul>
-          <li v-for="(imglist, index) in recomList" :key="imglist.id">
-            <img :src="imglist.imgUrl" alt="" />
-          </li>
-        </ul>
+      <div class="main">
+        <div class="focus">
+          <Carousel :list="bannerList" />
+        </div>
+        <News />
+        <LifeService />
+        <div class="sale_img"></div>
       </div>
     </div>
   </div>
@@ -21,19 +16,22 @@
 
 <script>
 import { mapState } from "vuex";
+import News from "./news.vue";
+import LifeService from "./lifeservice.vue";
+
 export default {
-  name: "recom",
+  name: "",
   data() {
     return {};
   },
+
+  components: {  News, LifeService },
   mounted() {
     this.$store.dispatch("getBannerList");
   },
-  components: {},
-
   computed: {
     ...mapState({
-      recomList: (state) => {
+      bannerList: (state) => {
         return state.home.bannerList;
       },
     }),

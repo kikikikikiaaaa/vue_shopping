@@ -20,8 +20,7 @@ export default {
   },
   mounted() {
     // 派发一个action，获取商品分类三级列表数据
-    this.$store.dispatch("categoryList");
-    console.log(this);
+    this.$store.dispatch("getCategoryList");
   },
 };
 </script>

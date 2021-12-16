@@ -35,7 +35,7 @@
         color: #c81623;
     }
     
-    .shortcut .fr :nth-child(2n) {
+    .shortcut .headfr :nth-child(2n) {
         width: 1px;
         height: 10px;
         margin: 11px 12px 0;
