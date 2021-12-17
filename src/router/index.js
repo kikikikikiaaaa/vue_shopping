@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 import Home from '@/pages/Home/home'
 import Login from '@/pages/Login/login'
 import Register from '@/pages/Register/register'
-import Search from '@/pages/Search/search'
+import Search from '@/pages/Search'
 
 const routes = [{
     path: '/',

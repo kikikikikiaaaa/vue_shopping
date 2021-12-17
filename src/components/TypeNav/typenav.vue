@@ -139,11 +139,11 @@ export default {
         let location = { name: "search" };
         let query = { categoryName: categoryname };
         if (classa) {
-          query.id = classa;
+          query.category1Id = classa;
         } else if (classb) {
-          query.id = classb;
+          query.category2Id= classb;
         } else {
-          query.id = classc;
+          query.category3Id = classc;
         }
         if (this.$route.params) {
           location.params = this.$route.params;

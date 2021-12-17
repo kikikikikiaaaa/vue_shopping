@@ -81,10 +81,11 @@ export default {
       // this.$router.push('/search/${this.keyword}?k=${this.keyword}')
 
       // 第三种方法：对象
-      let query = {};
+      let query={}
       if (this.$route.query) {
         query = this.$route.query;
       }
+      query.keyword=this.keyword
       this.$router.push({
         name: "search",
         params: { keyword: this.keyword || undefined },
