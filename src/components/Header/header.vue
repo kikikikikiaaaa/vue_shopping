@@ -85,15 +85,18 @@ export default {
       if (this.$route.query) {
         query = this.$route.query;
       }
-      query.keyword=this.keyword
       this.$router.push({
         name: "search",
         params: { keyword: this.keyword || undefined },
         query,
       });
-      this.keyword = "";
     },
   },
+  mounted(){
+    this.$bus.$on('clear',()=>{
+      this.keyword=''
+    })
+  }
 };
 </script>
 <style  scoped>

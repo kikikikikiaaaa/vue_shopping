@@ -12,15 +12,27 @@
           </ul>
           <!-- 面包屑 -->
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName }}<i @click="removecateName">×</i>
+            </li>
+            <li
+              class="with-x"
+              v-if="searchParams.keyword"
+              @click="removeKeyword"
+            >
+              {{ searchParams.keyword }}<i>×</i>
+            </li>
+            <li class="with-x" v-if="searchParams.trademark" >
+              {{searchParams.trademark.split(':')[1]}}<i @click="removeTrademark">×</i>
+            </li>
+             <li class="with-x" v-for="(attr,index) in attrs" :key="index">
+              {{ attr}}<i @click="removeAttrs(index)">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector v-on:trademarkValue="addTrademark" v-on:attrsValue="addAttrs"/>
 
         <!--details-->
         <div class="details clearfix">
@@ -142,17 +154,18 @@ export default {
   data() {
     return {
       searchParams: {
-        category1Id: "",
-        category2Id: "",
-        category3Id: "",
-        categoryName: "",
-        keyword: "",
-        order: "",
+        category1Id: undefined,
+        category2Id: undefined,
+        category3Id: undefined,
+        categoryName: undefined,
+        keyword: undefined,
+        order: undefined,
         pageNo: 1,
         pageSize: 10,
         props: [],
-        trademark: "",
+        trademark: undefined,
       },
+      attrs:[]
     };
   },
   components: {
@@ -169,15 +182,57 @@ export default {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
+    addTrademark(trademark) {
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      this.getData()
+    },
+    removeTrademark(){
+      this.searchParams.trademark=undefined
+      this.getData()
+    },
+    addAttrs(attr){
+      this.attrs.push(attr)
+      this.getData()
+    },
+    removeAttrs(index){
+      this.attrs.splice(index,1)
+    },
+    removecateName() {
+      let Params = this.searchParams;
+      [
+        Params.categoryName,
+        Params.category1Id,
+        Params.category2Id,
+        Params.category3Id,
+      ] = [undefined, undefined, undefined, undefined];
+      this.$router.push({
+        name: "search",
+        params: this.$route.params,
+        query: { undefined },
+      });
+      this.getData();
+    },
+    removeKeyword() {
+      this.searchParams.keyword = undefined;
+      this.$router.push({
+        name: "search",
+        params: { keyword: undefined },
+        query: this.$route.query,
+      });
+      this.getData();
+      this.$bus.$emit("clear");
+    },
   },
   watch: {
     $route(newValue, oldValue) {
       Object.assign(this.searchParams, this.$route.query, this.$route.params);
-      console.log(this.searchParams);
       this.getData();
-      this.searchParams.category1Id=''
-      this.searchParams.category2Id=''
-      this.searchParams.category3Id=''
+      let Params = this.searchParams;
+      [Params.category1Id, Params.category2Id, Params.category3Id] = [
+        undefined,
+        undefined,
+        undefined,
+      ];
     },
   },
 };
