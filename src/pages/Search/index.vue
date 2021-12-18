@@ -22,40 +22,36 @@
             >
               {{ searchParams.keyword }}<i>×</i>
             </li>
-            <li class="with-x" v-if="searchParams.trademark" >
-              {{searchParams.trademark.split(':')[1]}}<i @click="removeTrademark">×</i>
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ searchParams.trademark.split(":")[1]
+              }}<i @click="removeTrademark">×</i>
             </li>
-             <li class="with-x" v-for="(attr,index) in attrs" :key="index">
-              {{ attr}}<i @click="removeAttrs(index)">×</i>
+            <li
+              class="with-x"
+              v-for="(attr, index) in searchParams.props"
+              :key="index"
+            >
+              {{ attr.split(":")[1] }}<i @click="removeAttrs(index)">×</i>
             </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector v-on:trademarkValue="addTrademark" v-on:attrsValue="addAttrs"/>
+        <SearchSelector
+          v-on:trademarkValue="addTrademark"
+          v-on:attrsValue="addAttrs"
+        />
 
         <!--details-->
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active:isOne  }" @click="changeOrder(1)">
+                  <b>综合<i v-if="isOne" class="iconfont" :class="{'icon-jiantou_xiangshang':isUp,'icon-jiantou_xiangxia':isDown}" ></i></b>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{ active: isTwo }" @click="changeOrder(2)">
+                  <b>价格<i v-if="isTwo" class="iconfont" :class="{'icon-jiantou_xiangshang':isUp,'icon-jiantou_xiangxia':isDown}" ></i></b>
                 </li>
               </ul>
             </div>
@@ -159,13 +155,12 @@ export default {
         category3Id: undefined,
         categoryName: undefined,
         keyword: undefined,
-        order: undefined,
+        order: "1:desc",
         pageNo: 1,
         pageSize: 10,
         props: [],
         trademark: undefined,
       },
-      attrs:[]
     };
   },
   components: {
@@ -177,25 +172,43 @@ export default {
   mounted() {
     this.getData();
   },
-  computed: { ...mapGetters(["goodsList"]) },
+  computed: {
+    ...mapGetters(["goodsList"]),
+    isOne() {
+      return this.searchParams.order.indexOf("1") != -1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf("2") != -1;
+    },
+    isUp() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
+    isDown() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
+  },
   methods: {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
     addTrademark(trademark) {
       this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
-      this.getData()
+      this.getData();
     },
-    removeTrademark(){
-      this.searchParams.trademark=undefined
-      this.getData()
+    removeTrademark() {
+      this.searchParams.trademark = undefined;
+      this.getData();
     },
-    addAttrs(attr){
-      this.attrs.push(attr)
-      this.getData()
+    addAttrs(attr, attrvalue) {
+      let props = `${attr.attrId}:${attrvalue}:${attr.attrName}`;
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props);
+        this.getData();
+      }
     },
-    removeAttrs(index){
-      this.attrs.splice(index,1)
+    removeAttrs(index) {
+      this.searchParams.props.splice(index, 1);
+      this.getData();
     },
     removecateName() {
       let Params = this.searchParams;
@@ -221,6 +234,22 @@ export default {
       });
       this.getData();
       this.$bus.$emit("clear");
+    },
+    changeOrder(flag) {
+      let orginFlag = this.searchParams.order.split(":")[0];
+      let orginSort = this.searchParams.order.split(":")[1];
+      if (flag == orginFlag) {
+        if (orginSort == "asc") {
+          orginSort = "desc";
+        } else {
+          orginSort = "asc";
+        }
+      } else {
+        orginFlag = flag;
+        orginSort = "desc";
+      }
+      this.searchParams.order = orginFlag + ":" + orginSort;
+      this.getData()
     },
   },
   watch: {
@@ -283,13 +312,13 @@ export default {
 
         .with-x {
           font-size: 12px;
-          margin: 0 5px 5px 0;
+          margin: 0 5px;
           display: inline-block;
           overflow: hidden;
           color: #000;
           background: #f7f7f7;
           padding: 0 7px;
-          height: 20px;
+          height: 22px;
           line-height: 20px;
           border: 1px solid #dedede;
           white-space: nowrap;
@@ -339,16 +368,22 @@ export default {
               float: left;
               line-height: 18px;
 
-              a {
+              b {
                 display: block;
                 cursor: pointer;
                 padding: 11px 15px;
                 color: #777;
                 text-decoration: none;
+
+                i {
+                  position: relative;
+                  top: 1px;
+                  left: 5px;
+                }
               }
 
               &.active {
-                a {
+                b {
                   background: #e1251b;
                   color: #fff;
                 }

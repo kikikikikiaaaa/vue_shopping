@@ -24,7 +24,7 @@
         <ul class="type-list">
           <li v-for="attrvalue in attrs.attrValueList">
             <a 
-            @click="attrsHandler(attrvalue)">{{ attrvalue }}</a>
+            @click="attrsHandler(attrs,attrvalue)">{{ attrvalue }}</a>
           </li>
         </ul>
       </div>
@@ -42,8 +42,8 @@ export default {
     trademarkHandler(trademark) {
       this.$emit("trademarkValue", trademark);
     },
-    attrsHandler(attrs){
-      this.$emit("attrsValue", attrs);
+    attrsHandler(attrs,attrvalue){
+      this.$emit("attrsValue", attrs,attrvalue);
     }
   },
 };
@@ -77,15 +77,15 @@ export default {
       background: #f1f1f1;
       line-height: 26px;
       text-align: right;
-      padding: 10px 10px 0 15px;
+      padding: 5px 10px 5px 15px;
       float: left;
     }
 
     .value {
       overflow: hidden;
-      padding: 10px 0 0 15px;
+      padding: 5px 0 5px 15px;
       color: #333;
-      margin-left: 120px;
+      // margin-left: 10px;
       padding-right: 90px;
 
       .logo-list {
