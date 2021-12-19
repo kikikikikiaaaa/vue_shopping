@@ -10,6 +10,9 @@ Vue.component(TypeNav.name, TypeNav)
 import Carousel from '@/components/Carousel/carousel'
 Vue.component(Carousel.name, Carousel)
 
+import Pagination from '@/components/Pagination/pagination'
+Vue.component(Pagination.name, Pagination)
+
 // 引入仓库
 import store from '@/store'
 
