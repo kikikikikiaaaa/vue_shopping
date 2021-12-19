@@ -110,7 +110,7 @@ export default {
   },
   mounted() {
     this.routeName = this.$route.name;
-    if (this.routeName == "search") {
+    if (this.routeName != "home") {
       this.show = false;
     } else {
       this.show = true;
@@ -156,7 +156,7 @@ export default {
       this.show = true;
     },
     leaveShow() {
-      if (this.routeName == "search") {
+      if (this.routeName != "home") {
         this.show = false;
       }
     },

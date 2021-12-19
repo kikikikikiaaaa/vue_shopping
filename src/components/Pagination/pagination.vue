@@ -110,22 +110,15 @@ export default {
     cursor: pointer;
     box-sizing: border-box;
     text-align: center;
-    // border: 1px solid #666;
 
-    &[disabled] {
-      color: #c0c4cc;
-      cursor: not-allowed;
-    }
 
     &.active {
-      cursor: not-allowed;
       background-color: #c81623;
       color: #fff;
     }
 
     &:hover {
       border: 1.5px solid #c81623;
-      z-index: 9999;
     }
   }
 }

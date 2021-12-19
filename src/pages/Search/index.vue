@@ -67,9 +67,9 @@
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="" target="_blank"
+                    <router-link :to="`/detail/${goodlist.id}`" @click="goDetail(goodlist.id)"
                       ><img :src="goodlist.defaultImg"
-                    /></a>
+                    /></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -81,7 +81,7 @@
                     <a
                       target="_blank"
                       href=""
-                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
+                      title=""
                       >{{ goodlist.title }}</a
                     >
                   </div>
@@ -106,7 +106,7 @@
           <!-- 商品详情结束 -->
 
           <!-- 分页器开始 -->
-          <Pagination :pageNo=searchParams.pageNo :pageSize=searchParams.pageSize :total='210' :continues='5' v-on:getPage='getPage'/>
+          <Pagination :pageNo=searchParams.pageNo :pageSize=searchParams.pageSize :total="total" :continues='5' v-on:getPage='getPage'/>
           <!-- 分页器结束 -->
         </div>
       </div>
@@ -115,7 +115,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import search from '@/store/search';
+import { mapGetters,mapState } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
   name: "Search",
@@ -158,13 +159,15 @@ export default {
     isDown() {
       return this.searchParams.order.indexOf("desc") != -1;
     },
+    ...mapState({
+      total:state=>state.search.searchList.total
+    })
   },
   methods: {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
     getPage(page){
-      console.log(page);
       this.searchParams.pageNo=page
      this.getData()
     },
@@ -193,7 +196,7 @@ export default {
         Params.categoryName,
         Params.category1Id,
         Params.category2Id,
-        Params.category3Id,
+        Params.category3Id
       ] = [undefined, undefined, undefined, undefined];
       this.$router.push({
         name: "search",
@@ -228,6 +231,10 @@ export default {
       this.searchParams.order = orginFlag + ":" + orginSort;
       this.getData()
     },
+    goDetail(){
+      console.log(1);
+      this.router.push({name:'/detail'})
+    }
   },
   watch: {
     $route(newValue, oldValue) {

@@ -3,42 +3,18 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Home from '@/pages/Home/home'
-import Login from '@/pages/Login/login'
-import Register from '@/pages/Register/register'
-import Search from '@/pages/Search'
-
-const routes = [{
-    path: '/',
-    component: Home,
-    meta: { show: true }
-}, {
-    path: '/home',
-    component: Home,
-    meta: { show: true }
-}, {
-    path: '/login',
-    component: Login,
-    meta: { show: false }
-}, {
-    path: '/register',
-    component: Register,
-    meta: { show: false }
-}, {
-    path: '/search/:keyword?',
-    component: Search,
-    meta: { show: true },
-    name: 'search',
-    // children: [{
-    //     path: 'keyword',
-    //     component: Search
-    // }]
-}, ]
-
+import home from '@/store/home'
+import routes from '@/router/routes'
 
 const router = new VueRouter({
     routes,
-    mode: 'history'
+    mode: 'history',
+    scrollBehavior(to, from, savePosition) {
+        return {
+            x: 0,
+            y: 0
+        }
+    }
 })
 
 // 解决$router.push报错 重写push方法 （解决replace报错同理）
