@@ -25,4 +25,5 @@ export default {
 };
 </script>
 <style  scoped>
+@import '~@/css/base.css'
 </style>

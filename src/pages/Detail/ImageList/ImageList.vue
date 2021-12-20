@@ -1,8 +1,8 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <img src="../images/s1.png">
+      <div class="swiper-slide" v-for="(skuImage,index) in skuImageList">
+        <img :src="skuImage.imgUrl" @click="changeImg(skuImage.imgUrl)">
       </div>
     </div>
     <div class="swiper-button-next"></div>
@@ -15,6 +15,11 @@
   import Swiper from 'swiper'
   export default {
     name: "ImageList",
+    props:['skuImageList'],
+    methods:{
+      changeImg(imgUrl){
+        // this.$bus.$emit('isChange',imgUrl)
+      }}
   }
 </script>
 

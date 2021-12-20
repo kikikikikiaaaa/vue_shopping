@@ -19,11 +19,16 @@ export const reqGetFloorList = () => {
     return mockRequests.get('/floor')
 }
 
-// 商品详情接口 post请求 需要带参
+// 搜索商品接口 post请求 需要带参
 export const reqGetSearchInfo = (params) => {
     return requests({
         url: '/list',
         method: 'post',
         data: params
     })
+}
+
+// detail
+export const reqGetGoodsInfo = (skuId) => {
+    return requests.get(`/item/${skuId}`)
 }
