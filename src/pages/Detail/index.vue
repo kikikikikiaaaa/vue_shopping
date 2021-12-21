@@ -16,7 +16,7 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom :skuDefaultImg='skuInfo.skuDefaultImg'/>
+          <Zoom :skuDefaultImg='skuInfo.skuDefaultImg' />
           <!-- 小图列表 -->
           <ImageList :skuImageList='skuInfo.skuImageList'/>
         </div>
@@ -83,9 +83,9 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @keyup='skuNum=skuNum.replace(/[^0-9]/gi,"")'/>
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNum=1">-</a>
               </div>
               <div class="add">
                 <a href="javascript:">加入购物车</a>
@@ -334,7 +334,9 @@ import Zoom from "./Zoom/Zoom";
 export default {
   name: "Detail",
   data() {
-    return {};
+    return {
+      skuNum:1
+    };
   },
   components: {
     ImageList,
@@ -358,8 +360,7 @@ export default {
        e.isChecked='0'
      });
      value.isChecked='1'
-     }
-   
+     },
   }
 };
 </script>
