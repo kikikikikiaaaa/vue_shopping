@@ -77,7 +77,7 @@
               <div class="choosed"></div>
               <dl v-for="spuSaleAttr in spuSaleAttrList" :key="spuSaleAttr.baseSaleAttrId">
                 <dt class="title" >{{spuSaleAttr.saleAttrName}}</dt>
-                <dd changepirce="0"  class="active" v-for="(spuSaleAttrValue,index) in spuSaleAttr.spuSaleAttrValueList" :key="index" @click="">{{spuSaleAttrValue.saleAttrValueName}}
+                <dd changepirce="0"  :class="{active:spuSaleAttrValue.isChecked==1}" v-for="(spuSaleAttrValue,index) in spuSaleAttr.spuSaleAttrValueList" :key="index" @click="isChoosen(spuSaleAttr.spuSaleAttrValueList,spuSaleAttrValue)">{{spuSaleAttrValue.saleAttrValueName}}
                 </dd>
               </dl>
             </div>
@@ -350,8 +350,17 @@ export default {
     ...mapGetters(['categoryView','skuInfo','spuSaleAttrList']),
     skuImageList(){
       return this.skuInfo.skuImageList||[]
-    }
-  },
+    },
+   
+  },methods:{
+     isChoosen(valueList,value){ 
+      valueList.forEach(e => {
+       e.isChecked='0'
+     });
+     value.isChecked='1'
+     }
+   
+  }
 };
 </script>
 
@@ -397,7 +406,7 @@ export default {
           margin: 15px 0;
           border: 0;
           height: 30px;
-          line-height: 30px;
+          line-height: 21px;
           width: 700px;
         }
 

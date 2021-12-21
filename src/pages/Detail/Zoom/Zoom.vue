@@ -1,25 +1,50 @@
 <template>
   <div class="spec-preview">
-    <img :src="skuDefaultImg" />
-    <div class="event"></div>
+    <img :src="currentImg" />
+    <div class="event" @mousemove="handler"></div>
     <div class="big">
-      <img :src="skuDefaultImg" />
+      <img :src="currentImg" ref="big" />
     </div>
-    <div class="mask"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Zoom",
-  data(){return{
-  }},
+  data() {
+    return {
+      imgUrl: "",
+    };
+  },
   props: ["skuDefaultImg"],
-  updated() {
-    // this.$bus.$on("isChange", (imgUrl) => {
-    //   console.log(this.skuDefaultImg);
-    //   this.skuDefaultImg = imgUrl;
-    // });
+  computed: {
+    currentImg() {
+      if (this.imgUrl == "") {
+        return this.skuDefaultImg;
+      } else return this.imgUrl;
+    },
+  },
+  mounted() {
+    this.$bus.$on("getImg", (imgUrl) => {
+      this.imgUrl = imgUrl;
+    });
+  },
+  methods: {
+    handler(e) {
+      let mask = this.$refs.mask,
+        big = this.$refs.big;
+      let left = e.offsetX - mask.offsetWidth / 2;
+      let top = e.offsetY - mask.offsetHeight / 2;
+      if (left <= 0) left = 0;
+      if (top <= 0) top = 0;
+      if (left >= mask.offsetWidth) left = mask.offsetWidth;
+      if (top >= mask.offsetHeight) top = mask.offsetHeight;
+      mask.style.left = left + "px";
+      mask.style.top = top + "px";
+      big.style.left = -2 * left + "px";
+      big.style.top = -2 * top + "px";
+    },
   },
 };
 </script>
@@ -30,6 +55,7 @@ export default {
   width: 400px;
   height: 400px;
   border: 1px solid #ccc;
+  // overflow: hidden;
 
   img {
     width: 100%;
@@ -48,7 +74,7 @@ export default {
   .mask {
     width: 50%;
     height: 50%;
-    background-color: rgba(0, 255, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0.3);
     position: absolute;
     left: 0;
     top: 0;
