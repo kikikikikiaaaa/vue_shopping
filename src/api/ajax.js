@@ -7,6 +7,8 @@ import nProgress from 'nprogress'
 // 引入进度条样式
 import 'nprogress/nprogress.css'
 
+import store from '@/store'
+
 // 稍微配置axios
 const requests = axios.create({
     baseURL: '/api',
@@ -15,6 +17,9 @@ const requests = axios.create({
 
 // 请求拦截器
 requests.interceptors.request.use((config) => {
+    if (store.state.detail.uuid_token) {
+        config.headers.userTempid = store.state.detail.uuid_token
+    }
     nProgress.start()
     return config
 })
