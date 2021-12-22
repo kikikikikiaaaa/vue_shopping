@@ -32,3 +32,11 @@ export const reqGetSearchInfo = (params) => {
 export const reqGetGoodsInfo = (skuId) => {
     return requests.get(`/item/${skuId}`)
 }
+
+// 添加购物车
+export const reqAddOrUpdateShopCart = (skuId, skuNum) => {
+    return requests({
+        url: `/cart/addToCart/${skuId}/${skuNum}`,
+        method: 'post'
+    })
+}

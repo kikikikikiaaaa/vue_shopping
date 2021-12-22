@@ -7,27 +7,33 @@
     <section class="con">
       <!-- 导航路径区域 -->
       <div class="conPoin">
-        <span v-show="categoryView.category1Name">{{categoryView.category1Name}}</span>
-        <span  v-show="categoryView.category2Name">{{categoryView.category2Name}}</span>
-        <span  v-show="categoryView.category2Name">{{categoryView.category3Name}}</span>
+        <span v-show="categoryView.category1Name">{{
+          categoryView.category1Name
+        }}</span>
+        <span v-show="categoryView.category2Name">{{
+          categoryView.category2Name
+        }}</span>
+        <span v-show="categoryView.category2Name">{{
+          categoryView.category3Name
+        }}</span>
       </div>
       <!-- 主要内容区域 -->
       <div class="mainCon">
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom :skuDefaultImg='skuInfo.skuDefaultImg' />
+          <Zoom :skuDefaultImg="skuInfo.skuDefaultImg" />
           <!-- 小图列表 -->
-          <ImageList :skuImageList='skuInfo.skuImageList'/>
+          <ImageList :skuImageList="skuInfo.skuImageList" />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
           <div class="goodsDetail">
             <h3 class="InfoName">
-             {{skuInfo.skuName}}
+              {{ skuInfo.skuName }}
             </h3>
             <p class="news">
-              {{skuInfo.skuDesc}}
+              {{ skuInfo.skuDesc }}
             </p>
             <div class="priceArea">
               <div class="priceArea1">
@@ -36,7 +42,7 @@
                 </div>
                 <div class="price">
                   <i>¥</i>
-                  <em>{{skuInfo.price}}</em>
+                  <em>{{ skuInfo.price }}</em>
                   <span>降价通知</span>
                 </div>
                 <div class="remark">
@@ -75,20 +81,47 @@
           <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
-              <dl v-for="spuSaleAttr in spuSaleAttrList" :key="spuSaleAttr.baseSaleAttrId">
-                <dt class="title" >{{spuSaleAttr.saleAttrName}}</dt>
-                <dd changepirce="0"  :class="{active:spuSaleAttrValue.isChecked==1}" v-for="(spuSaleAttrValue,index) in spuSaleAttr.spuSaleAttrValueList" :key="index" @click="isChoosen(spuSaleAttr.spuSaleAttrValueList,spuSaleAttrValue)">{{spuSaleAttrValue.saleAttrValueName}}
+              <dl
+                v-for="spuSaleAttr in spuSaleAttrList"
+                :key="spuSaleAttr.baseSaleAttrId"
+              >
+                <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
+                <dd
+                  changepirce="0"
+                  :class="{ active: spuSaleAttrValue.isChecked == 1 }"
+                  v-for="(
+                    spuSaleAttrValue, index
+                  ) in spuSaleAttr.spuSaleAttrValueList"
+                  :key="index"
+                  @click="
+                    isChoosen(
+                      spuSaleAttr.spuSaleAttrValueList,
+                      spuSaleAttrValue
+                    )
+                  "
+                >
+                  {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
               </dl>
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" v-model="skuNum" @keyup='skuNum=skuNum.replace(/[^0-9]/gi,"")'/>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="skuNum"
+                  @keyup="skuNum = skuNum.replace(/[^0-9]/gi, '')"
+                />
                 <a href="javascript:" class="plus" @click="skuNum++">+</a>
-                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNum=1">-</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : (skuNum = 1)"
+                  >-</a
+                >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a href="javascript:" @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -327,7 +360,7 @@
 </template>
 
 <script>
-import { mapState,mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import ImageList from "./ImageList/ImageList";
 import Zoom from "./Zoom/Zoom";
 
@@ -335,7 +368,7 @@ export default {
   name: "Detail",
   data() {
     return {
-      skuNum:1
+      skuNum: 1,
     };
   },
   components: {
@@ -349,19 +382,33 @@ export default {
     // ...mapState({
     //   price:state=>state.detail.goodInfo.price
     // }),
-    ...mapGetters(['categoryView','skuInfo','spuSaleAttrList']),
-    skuImageList(){
-      return this.skuInfo.skuImageList||[]
+    ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
+    skuImageList() {
+      return this.skuInfo.skuImageList || [];
     },
-   
-  },methods:{
-     isChoosen(valueList,value){ 
-      valueList.forEach(e => {
-       e.isChecked='0'
-     });
-     value.isChecked='1'
-     },
-  }
+  },
+  methods: {
+    isChoosen(valueList, value) {
+      valueList.forEach((e) => {
+        e.isChecked = "0";
+      });
+      value.isChecked = "1";
+      console.log(valueList);
+      console.log(this.skuInfo);
+    },
+    async addShopCart() {
+      try {
+        await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: this.skuInfo.id,
+          skuNum: this.skuNum,
+        });
+        sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
+        this.$router.push({path:'/addcartsuccess',query:{skuNum:this.skuNum}})
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+  },
 };
 </script>
 

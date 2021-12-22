@@ -1,4 +1,4 @@
-import { reqGetGoodsInfo } from '@/api'
+import { reqGetGoodsInfo, reqAddOrUpdateShopCart } from '@/api'
 const state = {
     goodInfo: {}
 }
@@ -12,6 +12,14 @@ const actions = {
         let result = await reqGetGoodsInfo(skuId)
         if (result.code == 200) {
             commit("GETGOODINFO", result.data)
+        }
+    },
+    async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
+        let result = await reqAddOrUpdateShopCart(skuId, skuNum)
+        if (result.code == 200) {
+            return 1
+        } else {
+            return Promise.reject(new Error('faile'))
         }
     }
 }
