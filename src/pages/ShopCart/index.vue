@@ -41,20 +41,21 @@
             <a
               href="javascript:void(0)"
               class="mins"
-              @click="
-                cartInfo.skuNum > 1 ? cartInfo.skuNum-- : (cartInfo.skuNum = 1)
-              "
+              @click="handler(cartInfo, -1, -1)"
               >-</a
             >
             <input
               autocomplete="off"
               type="text"
-              v-model="cartInfo.skuNum"
+              :value="cartInfo.skuNum"
               minnum="1"
               class="itxt"
-              @keyup="cartInfo.skuNum = cartInfo.skuNum.replace(/[^0-9]/gi, '')"
+              @keyup="handler(cartInfo, 0, $event.target.value)"
             />
-            <a href="javascript:void(0)" class="plus" @click="cartInfo.skuNum++"
+            <a
+              href="javascript:void(0)"
+              class="plus"
+              @click="handler(cartInfo, 1, 1)"
               >+</a
             >
           </li>
@@ -64,7 +65,9 @@
             >
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet" @click="removeCart(index)">删除</a>
+            <a href="#none" class="sindelet" @click="removeCart(cartInfo.skuId)"
+              >删除</a
+            >
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -82,10 +85,7 @@
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">
-          已选择 <span>{{  }}</span
-          >件商品
-        </div>
+        <div class="chosed">已选择 <span>{{}}</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
           <i class="summoney">{{ totalPrice }}</i>
@@ -100,6 +100,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import throttle from "lodash/throttle";
 export default {
   name: "ShopCart",
   data() {
@@ -128,11 +129,41 @@ export default {
     getData() {
       this.$store.dispatch("getCartList");
     },
-    removeCart(index) {
-      this.cartInfoList.splice(index, 1);
-      console.log(this.cartInfoList);
+    removeCart: throttle(async function (id) {
+      try {
+        await this.$store.dispatch("deleteCartById", id);
+        this.getData();
+      } catch (error) {
+        console.log(error);
+      }
+    }, 10),
+    async handler(cart, type, num) {
+      let changeNum = 0;
+      switch (type) {
+        case 1:
+          changeNum = 1;
+          break;
+        case -1:
+          cart.skuNum > 1 ? (changeNum = -1) : (changeNum = 0);
+          break;
+        case 0:
+          if (isNaN(num * 1) || num <= 0) {
+            changeNum = 0;
+          } else {
+            changeNum = parseInt(num) - cart.skuNum;
+          }
+          break;
+      }
+      try {
+        await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: cart.skuId,
+          skuNum: changeNum,
+        });
+        this.getData();
+      } catch (error) {
+        console.log(error);
+      }
     },
-  
   },
 };
 </script>
