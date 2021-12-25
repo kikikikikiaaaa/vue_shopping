@@ -89,8 +89,7 @@
                     <i class="command">已有<span>2000</span>人评价</i>
                   </div>
                   <div class="operate">
-                    <a
-                      href="success-cart.html"
+                    <a @click="addShopCart(goodlist)"
                       target="_blank"
                       class="sui-btn btn-bordered btn-danger"
                       >加入购物车</a
@@ -234,7 +233,21 @@ export default {
     goDetail(){
       console.log(1);
       this.router.push({name:'/detail'})
-    }
+    },
+    async addShopCart(goods) {
+      try {
+        await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: goods.id,
+          skuNum:1,
+        });
+        goods.skuName=goods.title
+        goods.skuDefaultImg=goods.defaultImg
+        sessionStorage.setItem('SKUINFO',JSON.stringify(goods))
+        this.$router.push({path:'/addcartsuccess',query:{skuNum:1}})
+      } catch (error) {
+        alert(error.message);
+      }
+    },
   },
   watch: {
     $route(newValue, oldValue) {

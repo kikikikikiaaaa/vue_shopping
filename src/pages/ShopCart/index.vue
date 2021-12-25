@@ -22,7 +22,7 @@
               type="checkbox"
               name="chk_list"
               :checked="cartInfo.isChecked"
-              @click="cartInfo.isChecked = !cartInfo.isChecked"
+              @click="updateChecked(cartInfo, $event)"
             />
           </li>
           <li class="cart-list-con2">
@@ -41,7 +41,7 @@
             <a
               href="javascript:void(0)"
               class="mins"
-              @click="handler(cartInfo, -1, -1)"
+              @click="handler(cartInfo, -1, cartInfo.skuNum)"
               >-</a
             >
             <input
@@ -50,12 +50,12 @@
               :value="cartInfo.skuNum"
               minnum="1"
               class="itxt"
-              @keyup="handler(cartInfo, 0, $event.target.value)"
+              @change="handler(cartInfo, 0, $event.target.value)"
             />
             <a
               href="javascript:void(0)"
               class="plus"
-              @click="handler(cartInfo, 1, 1)"
+              @click="handler(cartInfo, 1, cartInfo.skuNum)"
               >+</a
             >
           </li>
@@ -76,19 +76,27 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllChecked" />
-        <span>全选</span>
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isAllChecked&&cartInfoList.length>0"
+          @click="allChecked"
+        />
+        <span> 全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a href="#none" @click="deleteAllCheckedById">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>{{}}</span>件商品</div>
+        <div class="chosed">
+          已选择 <span>{{ totalNum }} </span
+          >件商品
+        </div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
-          <i class="summoney">{{ totalPrice }}</i>
+          <i class="summoney">{{ totalPrice }}.00</i>
         </div>
         <div class="sumbtn">
           <a class="sum-btn" href="###" target="_blank">结算</a>
@@ -117,7 +125,14 @@ export default {
     totalPrice() {
       let total = 0;
       this.cartInfoList.forEach((e) => {
-        total += e.skuPrice * e.skuNum;
+        if (e.isChecked == 1) total += e.skuPrice * e.skuNum;
+      });
+      return total;
+    },
+    totalNum() {
+      let total = 0;
+      this.cartInfoList.forEach((e) => {
+        if (e.isChecked == 1) total++;
       });
       return total;
     },
@@ -129,6 +144,16 @@ export default {
     getData() {
       this.$store.dispatch("getCartList");
     },
+    //修改全部商品的状态
+    async allChecked(event) {
+      let flag = event.target.checked ? 1 : 0;
+      try {
+        await this.$store.dispatch("updateAllChecked", flag);
+        this.$store.dispatch("getCartList");
+      } catch (error) {
+        alert(error);
+      }
+    },
     removeCart: throttle(async function (id) {
       try {
         await this.$store.dispatch("deleteCartById", id);
@@ -137,20 +162,63 @@ export default {
         console.log(error);
       }
     }, 10),
-    async handler(cart, type, num) {
+    async deleteAllCheckedById() {
+      try {
+        await this.$store.dispatch("deleteAllCheckedById");
+        //删除成功，刷新数据
+        this.$store.dispatch("getCartList");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    async updateChecked(cartInfo, event) {
+      try {
+        let checked = event.target.checked ? "1" : "0";
+        await this.$store.dispatch("updateCheckedById", {
+          skuId: cartInfo.skuId,
+          isChecked: checked,
+        });
+        this.getData();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // 防抖函数
+    debounce: function (func, wait = 0) {
+      if (typeof func !== "function") {
+        throw new TypeError("need a function arguments");
+      }
+      let timeid = null;
+      let result;
+      return function () {
+        let context = this;
+        let args = arguments;
+        if (timeid) {
+          clearTimeout(timeid);
+        }
+        timeid = setTimeout(function () {
+          result = func.apply(context, args);
+        }, wait);
+        return result;
+      };
+    },
+    async handler(cart, type, currentNum) {
       let changeNum = 0;
       switch (type) {
         case 1:
           changeNum = 1;
+          cart.skuNum++;
           break;
         case -1:
-          cart.skuNum > 1 ? (changeNum = -1) : (changeNum = 0);
+          currentNum > 1 ? (changeNum = -1) : (changeNum = 0);
+          currentNum > 1 ? cart.skuNum-- : (cart.skuNum = 1);
           break;
         case 0:
-          if (isNaN(num * 1) || num <= 0) {
+          console.log(currentNum);
+          if (isNaN(currentNum * 1) || currentNum <= 0) {
             changeNum = 0;
           } else {
-            changeNum = parseInt(num) - cart.skuNum;
+            changeNum = parseInt(currentNum) - cart.skuNum;
           }
           break;
       }
@@ -159,7 +227,12 @@ export default {
           skuId: cart.skuId,
           skuNum: changeNum,
         });
-        this.getData();
+        // 如果+/-，防抖
+        if (type == 1 || type == -1) {
+          this.debounce(this.getData, 2000);
+        } else {
+          this.getData();
+        }
       } catch (error) {
         console.log(error);
       }

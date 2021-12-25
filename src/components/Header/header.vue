@@ -58,7 +58,7 @@
           <a href="">亿元优惠</a>
         </div>
       </div>
-      <div class="shopcar">我的购物车<i>8</i></div>
+      <router-link to="/shopcart" class="shopcar" >我的购物车<i>8</i></router-link>
     </header>
   </div>
 </template>
