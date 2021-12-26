@@ -44,6 +44,7 @@ header img {
 }
 
 .reg_cont li {
+    position: relative;
     font-size: 12px;
     margin: 27px;
 }
@@ -56,10 +57,12 @@ header img {
 }
 
 .reg_cont li input {
+    position: relative;
     width: 242px;
     height: 37px;
     border: 1px solid #666;
     margin-left: 2px;
+    padding: 5px;
 }
 
 .reg_cont li .error {
@@ -130,7 +133,7 @@ header img {
 }
 
 .reg_cont ul .btn {
-    position: absolute;
+    position: relative;
     bottom: -5px;
     left: 140px;
     width: 170px;
@@ -159,4 +162,18 @@ header img {
 .reg_cont li .succ_icon {
     background: url(../assets/images/success.png) no-repeat;
     background-position: 2px 3px;
+}
+
+.getcode {
+    width: 90px;
+    height: 30px;
+    background-color: rgb(238, 238, 238);
+    border: 1px solid #666;
+    margin-left: 5px;
+}
+
+.codetips {
+    position: absolute;
+    left: 100px;
+    top: 30px;
 }
