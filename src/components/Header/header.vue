@@ -5,9 +5,12 @@
       <div class="w">
         <ul class="fl">
           <li>品优购欢迎您！&nbsp;</li>
-          <li>
+          <li v-if="!userName">
             <router-link to="/login">请登录&nbsp;</router-link>
             <router-link to="/register" class="color_red">免费注册</router-link>
+          </li>
+          <li v-if="userName">{{userName}}
+            <router-link to="/login" class="color_red">&nbsp;退出登录</router-link>
           </li>
         </ul>
         <ul class="fr headfr">
@@ -75,11 +78,9 @@ export default {
     goSearch() {
       // 第一种方法：字符串
       // this.$router.push('/search/'+this.keyword+'?k='+this.keyword)
-
       // 第二种方法：模板字符串
       // 有点问题，原因不明
       // this.$router.push('/search/${this.keyword}?k=${this.keyword}')
-
       // 第三种方法：对象
       let query={}
       if (this.$route.query) {
@@ -96,6 +97,11 @@ export default {
     this.$bus.$on('clear',()=>{
       this.keyword=''
     })
+    this.$store.dispatch('getUserInfo')
+  },computed:{
+    userName(){
+     return this.$store.state.user.userInfo.name||''
+    }
   }
 };
 </script>

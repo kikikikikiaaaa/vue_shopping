@@ -76,3 +76,9 @@ export const reqUserLogin = (data) => requests({
     method: 'post',
     data
 })
+
+// 获取用户信息（token）
+export const reqUserInfo = () => requests({
+    url: `/user/passport/auth/getUserInfo`,
+    method: 'get'
+})

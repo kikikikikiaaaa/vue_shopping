@@ -21,6 +21,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getFloorList");
+    this.$store.dispatch('getUserInfo')
   },
   components: { Typenav, Main, Recom, Floor },
 

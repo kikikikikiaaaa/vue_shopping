@@ -21,7 +21,7 @@ const actions = {
         if (result.code == 200) {
             return 1
         } else {
-            return Promise.reject(new Error('faile'))
+            return Promise.reject(new Error(result.message))
         }
     }
 }

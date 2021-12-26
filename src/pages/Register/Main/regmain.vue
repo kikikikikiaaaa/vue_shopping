@@ -92,8 +92,8 @@ export default {
       password: "",
       password1: "",
       isagree: true,
-      phoneSucc:false,
-       phoneShow:false,
+      phoneSucc: false,
+      phoneShow: false,
       codeShow: false,
       codeSucc: false,
     };
@@ -126,9 +126,13 @@ export default {
     async userRegister() {
       try {
         const { phone, code, password, password1 } = this;
-        phone &&code &&password == password1 &&await this.$store.dispatch("userRegister", {phone,code,password});
-        this.$router.push({path:'/login',query:{phone:phone}})
-      } catch (error) {console.log(error);}
+        if (phone && code && password == password1) {
+          await this.$store.dispatch("userRegister", { phone, code, password });
+          this.$router.push({ path: "/login", query: { phone: phone } });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

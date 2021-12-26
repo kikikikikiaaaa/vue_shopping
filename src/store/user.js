@@ -1,7 +1,8 @@
-import { reqGetCode, reqUserRegister, reqUserLogin } from '@/api'
+import { reqGetCode, reqUserRegister, reqUserLogin, reqUserInfo } from '@/api'
 const state = {
     code: '',
-    token: ''
+    token: '',
+    userInfo: ''
 }
 const mutations = {
     GETCODE(state, code) {
@@ -9,6 +10,9 @@ const mutations = {
     },
     USERLOGIN(state, token) {
         state.token = token
+    },
+    USERINFO(state, userInfo) {
+        state.userInfo = userInfo
     }
 }
 const actions = {
@@ -18,7 +22,7 @@ const actions = {
             commit('GETCODE', result.data)
             return 'ok'
         } else {
-            return Promise.reject(new Error('faile'))
+            return Promise.reject(new Error(result.message))
         }
     },
     async userRegister({ commit }, data) {
@@ -27,7 +31,7 @@ const actions = {
             return 'ok'
         } else {
             alert(result.message)
-            return Promise.reject(new Error('faile'))
+            return Promise.reject(new Error(result.message))
         }
     },
     async userLogin({ commit }, data) {
@@ -37,7 +41,17 @@ const actions = {
             return 'ok'
         } else {
             alert(result.message)
-            return Promise.reject(new Error('faile'))
+            return Promise.reject(new Error(result.message))
+        }
+    },
+    async getUserInfo({ commit }) {
+        let result = await reqUserInfo()
+        if (result.code == 200) {
+            console.log(result);
+            commit('USERINFO', result.data)
+            return 'ok'
+        } else {
+            return Promise.reject(new Error(result.message))
         }
     }
 }
