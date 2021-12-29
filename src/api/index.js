@@ -82,3 +82,9 @@ export const reqUserInfo = () => requests({
     url: `/user/passport/auth/getUserInfo`,
     method: 'get'
 })
+
+// 退出登录
+export const reqLogout = () => requests.get('/user/passport/logout')
+
+// 获取用户地址
+export const reqAddressInfo = () => requests.get('/user/userAddress/auth/findUserAddressList')

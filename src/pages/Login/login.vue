@@ -4,7 +4,7 @@
     <div class="login-wrap">
       <div class="login">
         <div class="loginform">
-          <ul class="tab clearFix">
+          <ul class="tab clearfix">
             <li>
               <a href="##" style="border-right: 0">扫描登录</a>
             </li>
@@ -15,7 +15,7 @@
 
           <div class="content">
             <form action="##">
-              <div class="input-text clearFix">
+              <div class="input-text clearfix">
                 <span></span>
                 <input
                   type="text"
@@ -23,7 +23,7 @@
                   v-model="phone"
                 />
               </div>
-              <div class="input-text clearFix">
+              <div class="input-text clearfix">
                 <span class="pwd"></span>
                 <input
                   type="text"
@@ -31,7 +31,7 @@
                   v-model="password"
                 />
               </div>
-              <div class="setting clearFix">
+              <div class="setting clearfix">
                 <label class="checkbox inline">
                   <input name="m1" type="checkbox" value="2" checked="" />
                   自动登录
@@ -43,7 +43,7 @@
               </button>
             </form>
 
-            <div class="call clearFix">
+            <div class="call clearfix">
               <ul>
                 <li><img src="./images/qq.png" alt="" /></li>
                 <li><img src="./images/sina.png" alt="" /></li>
@@ -87,6 +87,7 @@ export default {
   },
   mounted() {
     this.phone = this.$route.query.phone;
+    this.$store.dispatch('getUserInfo')
   },
   methods: {
     async userLogin() {

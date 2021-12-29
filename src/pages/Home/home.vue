@@ -4,7 +4,7 @@
     <TypeNav />
     <Main />
     <Recom />
-    <Floor v-for="(floor, index) in floorList" :key="floor.id" :list='floor' />
+    <Floor v-for="(floor, index) in floorList" :key="floor.id" :list="floor" />
   </div>
 </template>
 
@@ -21,7 +21,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getFloorList");
-    this.$store.dispatch('getUserInfo')
   },
   components: { Typenav, Main, Recom, Floor },
 
@@ -32,7 +31,9 @@ export default {
       },
     }),
   },
-
+  mounted() {
+    this.$store.dispatch("getUserInfo");
+  },
   methods: {},
 };
 </script>

@@ -9,8 +9,9 @@
             <router-link to="/login">请登录&nbsp;</router-link>
             <router-link to="/register" class="color_red">免费注册</router-link>
           </li>
-          <li v-if="userName">{{userName}}
-            <router-link to="/login" class="color_red">&nbsp;退出登录</router-link>
+          <li v-if="userName">
+            {{ userName }}
+            <a href="" class="color_red" @click.prevent="logout">&nbsp;退出登录</a>
           </li>
         </ul>
         <ul class="fr headfr">
@@ -61,7 +62,9 @@
           <a href="">亿元优惠</a>
         </div>
       </div>
-      <router-link to="/shopcart" class="shopcar" >我的购物车<i>8</i></router-link>
+      <router-link to="/shopcart" class="shopcar"
+        >我的购物车<i>8</i></router-link
+      >
     </header>
   </div>
 </template>
@@ -82,7 +85,7 @@ export default {
       // 有点问题，原因不明
       // this.$router.push('/search/${this.keyword}?k=${this.keyword}')
       // 第三种方法：对象
-      let query={}
+      let query = {};
       if (this.$route.query) {
         query = this.$route.query;
       }
@@ -92,17 +95,25 @@ export default {
         query,
       });
     },
+  async  logout() {
+      try {
+      await  this.$store.dispatch("userLogout");
+        this.$router.replace("/home");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
-  mounted(){
-    this.$bus.$on('clear',()=>{
-      this.keyword=''
-    })
-    this.$store.dispatch('getUserInfo')
-  },computed:{
-    userName(){
-     return this.$store.state.user.userInfo.name||''
-    }
-  }
+  mounted() {
+    this.$bus.$on("clear", () => {
+      this.keyword = "";
+    });
+  },
+  computed: {
+    userName() {
+      return this.$store.state.user.userInfo.name || "";
+    },
+  },
 };
 </script>
 <style  scoped>

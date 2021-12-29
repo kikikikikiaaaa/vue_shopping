@@ -3,8 +3,9 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import home from '@/store/home'
+import store from '@/store'
 import routes from '@/router/routes'
+
 
 const router = new VueRouter({
     routes,
@@ -14,6 +15,33 @@ const router = new VueRouter({
             x: 0,
             y: 0
         }
+    }
+})
+
+router.beforeEach(async(to, from, next) => {
+    let token = store.state.user.token
+    let name = store.state.user.userInfo.name
+    if (token) {
+        if (to.path == '/login') {
+            next('/home')
+        } else {
+            if (name) {
+                next()
+            } else {
+                try {
+                    await store.dispatch('getUserInfo')
+                    next()
+                } catch (error) {
+                    store.dispatch('userLogout')
+                    next('/login')
+                }
+            }
+        }
+    } else {
+        if (to.path == '/shopcart') {
+            alert('请先登录')
+            next('/login')
+        } else next()
     }
 })
 
