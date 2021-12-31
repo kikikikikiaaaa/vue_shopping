@@ -88,3 +88,10 @@ export const reqLogout = () => requests.get('/user/passport/logout')
 
 // 获取用户地址
 export const reqAddressInfo = () => requests.get('/user/userAddress/auth/findUserAddressList')
+
+// 获取订单交易页信息
+export const reqOrderInfo = () => requests.get('order/auth/trade')
+
+// 提交订单
+// /api/order/auth/submitOrder?tradeNo={tradeNo}
+export const reqSubmitOrder = (tradeNo, data) => requests({ url: `/order/auth/submitOrder?tradeNo=${tradeNo}`, data, method: 'post' })

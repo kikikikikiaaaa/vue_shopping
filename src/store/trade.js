@@ -1,13 +1,32 @@
-import { reqAddressInfo } from '@/api/index'
-import { reqGetCode, reqUserRegister, reqUserLogin, reqUserInfo, reqLogout } from '@/api'
-import { setToken, getToken, removeToken } from '@/utils/token'
-const state = {}
-const mutations = {}
+import { reqAddressInfo, reqOrderInfo } from '@/api/index'
+const state = {
+    addressInfo: [],
+    orderInfo: [],
+    tradeNo: ''
+}
+const mutations = {
+    GETADDRESS(state, addressInfo) {
+        state.addressInfo = addressInfo
+    },
+    GETORDERINFO(state, orderInfo, tradeNo) {
+        state.orderInfo = orderInfo
+        state.tradeNo = tradeNo
+    }
+}
 const actions = {
-    async getCode({ commit }, phone) {
-        let result = await reqGetCode(phone)
+    async getAddress({ commit }) {
+        let result = await reqAddressInfo()
         if (result.code == 200) {
-            commit('GETCODE', result.data)
+            commit('GETADDRESS', result.data)
+            return 'ok'
+        } else {
+            return Promise.reject(new Error(result.message))
+        }
+    },
+    async getOrderInfo({ commit }) {
+        let result = await reqOrderInfo()
+        if (result.code == 200) {
+            commit('GETORDERINFO', result.data.detailArrayList, result.data.tradeNo)
             return 'ok'
         } else {
             return Promise.reject(new Error(result.message))

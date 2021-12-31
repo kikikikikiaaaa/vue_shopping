@@ -166,7 +166,7 @@ export default {
       try {
         await this.$store.dispatch("deleteAllCheckedById");
         //删除成功，刷新数据
-        this.$store.dispatch("getCartList");
+        this.getData();
       } catch (error) {
         alert(error);
       }
