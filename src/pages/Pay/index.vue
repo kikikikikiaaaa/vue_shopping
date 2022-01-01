@@ -91,7 +91,8 @@
           showCancelButton:true,
           showConfirmButton:true,
           cancelButtonText:'取消支付',
-          confirmButtonText:'支付已完成'
+          confirmButtonText:'支付已完成',
+          closeOnClickModal:true
         });
     }}
   }

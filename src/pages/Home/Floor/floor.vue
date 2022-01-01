@@ -46,8 +46,8 @@
 
 <script>
 export default {
-  name: "floor",
-  props: ["list"]
+  name: "Floor",
+  props: ["list"],
 };
 </script>
 <style  scoped>

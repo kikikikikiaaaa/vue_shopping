@@ -31,9 +31,6 @@ export default {
       },
     }),
   },
-  mounted() {
-    this.$store.dispatch("getUserInfo");
-  },
   methods: {},
 };
 </script>

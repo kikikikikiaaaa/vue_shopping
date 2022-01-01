@@ -15,7 +15,7 @@
           </li>
         </ul>
         <ul class="fr headfr">
-          <li>我的订单</li>
+          <li @click="myOrder"><a>我的订单</a></li>
           <li></li>
           <li class="arrow_icon iconfont">我的品优购</li>
           <li></li>
@@ -103,6 +103,9 @@ export default {
         console.log(error);
       }
     },
+    myOrder(){
+      this.$router.push('/center')
+    }
   },
   mounted() {
     this.$bus.$on("clear", () => {
